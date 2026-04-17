@@ -1,0 +1,302 @@
+{
+	"name": "VESC",
+	"type": "Serial",
+	"path": "Hardware",
+	"version": "1.0.0",
+	"description": "Serial UART control and telemetry for VESC motor controllers.",
+	"url": "https://vesc-project.com/",
+	"hasInput": true,
+	"hasOutput": true,
+	"defaults": {
+        "protocol": "Raw",
+        "autoAdd": false,
+		"baudRate": 115200
+	},
+    "hideDefaultParameters": [
+        "protocol",
+        "autoAdd",
+        "messageStructure",
+        "customSeparator",
+        "firstValueIsTheName",
+        "dtr",
+        "rts",
+		"baudRate"
+	],
+	"parameters": {
+		"Request FW Version": {
+			"type": "Trigger",
+			"description": "Query the VESC firmware version.",
+			"shortName": "requestFw"
+		},
+		"Request Values": {
+			"type": "Trigger",
+			"description": "Query the VESC telemetry values.",
+			"shortName": "requestValues"
+		},
+		"Send Alive": {
+			"type": "Trigger",
+			"description": "Send a keepalive packet.",
+			"shortName": "sendAlive"
+		},
+		"Apply Control": {
+			"type": "Trigger",
+			"description": "Send the selected control command.",
+			"shortName": "applyControl"
+		},
+		"CAN ID": {
+			"type": "Integer",
+			"description": "0 targets the local VESC, non-zero forwards over CAN.",
+			"shortName": "canId",
+			"default": 0,
+			"min": 0,
+			"max": 255
+		},
+		"Auto Poll": {
+			"type": "Boolean",
+			"description": "Automatically request COMM_GET_VALUES.",
+			"shortName": "autoPoll",
+			"default": true
+		},
+		"Poll Interval ms": {
+			"type": "Integer",
+			"description": "Telemetry polling interval in milliseconds.",
+			"shortName": "pollInterval",
+			"default": 250,
+			"min": 20,
+			"max": 5000
+		},
+		"Auto Alive": {
+			"type": "Boolean",
+			"description": "Automatically send COMM_ALIVE.",
+			"shortName": "autoAlive",
+			"default": true
+		},
+		"Alive Interval ms": {
+			"type": "Integer",
+			"description": "Keepalive interval in milliseconds.",
+			"shortName": "aliveInterval",
+			"default": 100,
+			"min": 20,
+			"max": 5000
+		},
+		"Log Raw Frames": {
+			"type": "Boolean",
+			"description": "Log raw UART frames in the Chataigne logger.",
+			"shortName": "logRaw",
+			"default": false
+		},
+		"Log Decoded Values": {
+			"type": "Boolean",
+			"description": "Log decoded packets and applied telemetry values.",
+			"shortName": "logDecoded",
+			"default": true
+		},
+		"Control Mode": {
+			"type": "String",
+			"description": "Command sent when Apply Control is triggered. Supported values: Duty, Current, Brake Current, RPM.",
+			"shortName": "controlMode",
+			"default": "Duty"
+		},
+		"Duty": {
+			"type": "Float",
+			"description": "Duty command in the range -1.0 to 1.0.",
+			"shortName": "duty",
+			"default": 0,
+			"min": -1,
+			"max": 1
+		},
+		"Current": {
+			"type": "Float",
+			"description": "Motor current command in amps.",
+			"shortName": "current",
+			"default": 0,
+			"min": -300,
+			"max": 300
+		},
+		"Brake Current": {
+			"type": "Float",
+			"description": "Brake current command in amps.",
+			"shortName": "brakeCurrent",
+			"default": 0,
+			"min": 0,
+			"max": 300
+		},
+		"RPM": {
+			"type": "Integer",
+			"description": "RPM command, usually eRPM for the VESC.",
+			"shortName": "rpmCommand",
+			"default": 0,
+			"min": -200000,
+			"max": 200000
+		}
+	},
+	"values": {
+		"FW Major": {
+			"type": "Integer",
+			"description": "Last firmware major version received.",
+			"shortName": "fwMajor",
+			"default": 0,
+			"min": 0,
+			"max": 255
+		},
+		"FW Minor": {
+			"type": "Integer",
+			"description": "Last firmware minor version received.",
+			"shortName": "fwMinor",
+			"default": 0,
+			"min": 0,
+			"max": 255
+		},
+		"RPM": {
+			"type": "Integer",
+			"description": "Last reported RPM.",
+			"shortName": "rpm",
+			"default": 0,
+			"min": -200000,
+			"max": 200000
+		},
+		"Input Voltage": {
+			"type": "Float",
+			"description": "Last reported input voltage.",
+			"shortName": "inputVoltage",
+			"default": 0,
+			"min": 0,
+			"max": 200
+		},
+		"Duty Cycle": {
+			"type": "Float",
+			"description": "Last reported duty cycle.",
+			"shortName": "dutyCycle",
+			"default": 0,
+			"min": -1,
+			"max": 1
+		},
+		"Motor Current": {
+			"type": "Float",
+			"description": "Last reported motor current.",
+			"shortName": "motorCurrent",
+			"default": 0,
+			"min": -500,
+			"max": 500
+		},
+		"Input Current": {
+			"type": "Float",
+			"description": "Last reported input current.",
+			"shortName": "inputCurrent",
+			"default": 0,
+			"min": -500,
+			"max": 500
+		},
+		"Mosfet Temp": {
+			"type": "Float",
+			"description": "Last reported MOSFET temperature.",
+			"shortName": "mosfetTemp",
+			"default": 0,
+			"min": -50,
+			"max": 200
+		},
+		"Motor Temp": {
+			"type": "Float",
+			"description": "Last reported motor temperature.",
+			"shortName": "motorTemp",
+			"default": 0,
+			"min": -50,
+			"max": 200
+		},
+		"Amp Hours": {
+			"type": "Float",
+			"description": "Last reported discharged amp hours.",
+			"shortName": "ampHours",
+			"default": 0,
+			"min": 0,
+			"max": 100000
+		},
+		"Amp Hours Charged": {
+			"type": "Float",
+			"description": "Last reported charged amp hours.",
+			"shortName": "ampHoursCharged",
+			"default": 0,
+			"min": 0,
+			"max": 100000
+		},
+		"Watt Hours": {
+			"type": "Float",
+			"description": "Last reported discharged watt hours.",
+			"shortName": "wattHours",
+			"default": 0,
+			"min": 0,
+			"max": 100000
+		},
+		"Watt Hours Charged": {
+			"type": "Float",
+			"description": "Last reported charged watt hours.",
+			"shortName": "wattHoursCharged",
+			"default": 0,
+			"min": 0,
+			"max": 100000
+		},
+		"Tachometer": {
+			"type": "Integer",
+			"description": "Last reported tachometer value.",
+			"shortName": "tachometer",
+			"default": 0,
+			"min": -2147483647,
+			"max": 2147483647
+		},
+		"Tachometer Abs": {
+			"type": "Integer",
+			"description": "Last reported absolute tachometer value.",
+			"shortName": "tachometerAbs",
+			"default": 0,
+			"min": -2147483647,
+			"max": 2147483647
+		},
+		"PID Position": {
+			"type": "Float",
+			"description": "Last reported PID position.",
+			"shortName": "pidPos",
+			"default": 0,
+			"min": -100000,
+			"max": 100000
+		},
+		"Controller ID": {
+			"type": "Integer",
+			"description": "Last reported controller ID.",
+			"shortName": "controllerId",
+			"default": 0,
+			"min": 0,
+			"max": 255
+		},
+		"Fault Code": {
+			"type": "Integer",
+			"description": "Last reported numeric fault code.",
+			"shortName": "faultCode",
+			"default": 0,
+			"min": 0,
+			"max": 255
+		},
+		"Fault": {
+			"type": "String",
+			"description": "Last reported fault code name.",
+			"shortName": "fault",
+			"default": "NONE"
+		},
+		"Power": {
+			"type": "Float",
+			"description": "Computed input power in watts.",
+			"shortName": "power",
+			"default": 0,
+			"min": -100000,
+			"max": 100000
+		},
+		"Status": {
+			"type": "String",
+			"description": "Script status and last message.",
+			"shortName": "status",
+			"default": "Idle"
+		}
+	},
+	"scripts": [
+		"vesc.js"
+	]
+}
