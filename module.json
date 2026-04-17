@@ -5,6 +5,7 @@
 	"version": "1.0.0",
 	"description": "Serial UART control and telemetry for VESC motor controllers.",
 	"url": "https://vesc-project.com/",
+	"downloadURL": "https://github.com/benkuper/VESC-Chataigne-module/archive/refs/heads/main.zip",
 	"hasInput": true,
 	"hasOutput": true,
 	"defaults": {
